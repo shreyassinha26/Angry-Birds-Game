@@ -71,7 +71,7 @@ function mouseDragged(){
 }
 
 function mouseReleased(){
-    slingshot.fly();
+    
     Matter.Body.setStatic(bird.body , false);
 }
 

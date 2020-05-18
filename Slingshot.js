@@ -23,9 +23,6 @@ class Slingshot{
         
         
     }
-    fly(){
-       
-        
-    }
+    
     
 }
