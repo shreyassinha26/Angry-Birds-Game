@@ -9,7 +9,7 @@ var backgroundImg,platform;
 var bird, slingshot;
 
 function preload() {
-    
+
     getTime();
     
     
@@ -107,7 +107,7 @@ async function getTime(){
     var datetime = responseJSON.datetime;
     var time = datetime.slice(11 , 13);
     console.log(time);
-    if(time>=6 && time<=17){
+    if(time>=6 && time<=19){
         backgroundImg = loadImage("sprites/bg.png");
     }
     else{
