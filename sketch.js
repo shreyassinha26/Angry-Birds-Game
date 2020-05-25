@@ -9,7 +9,11 @@ var backgroundImg,platform;
 var bird, slingshot;
 
 function preload() {
-    backgroundImg = loadImage("sprites/bg.png");
+    
+    getTime();
+    
+    
+    
 }
 
 function setup(){
@@ -43,39 +47,74 @@ function setup(){
 }
 
 function draw(){
-    background(backgroundImg);
-    Engine.update(engine);
-    strokeWeight(4);
-    box1.display();
-    box2.display();
-    ground.display();
-    pig1.display();
-    log1.display();
-
-    box3.display();
-    box4.display();
-    pig3.display();
-    log3.display();
-
-    box5.display();
-    log4.display();
-    log5.display();
-
+    if(backgroundImg){
+        background(backgroundImg);
+        Engine.update(engine);
+        strokeWeight(4);
+        box1.display();
+        box2.display();
+        ground.display();
+        pig1.display();
+        log1.display();
+        
+        box3.display();
+        box4.display();
+        pig3.display();
+        log3.display();
     
-    platform.display();
-    //log6.display();
-    slingshot.display(); 
-    bird.display();  
+        box5.display();
+        log4.display();
+        log5.display();
+        
+        platform.display();
+        //log6.display();
+        slingshot.display(); 
+        bird.display();  
+    }
+    else{
+        textSize(60);
+        text("Loading" , 600 , 200);
+    }
+    
+   
+    
 }
 function mouseDragged(){
-    if(mouseX<290){
+    if(mouseX<290 && bird.gamestate == bird.SERVE){
         Matter.Body.setPosition(bird.body , {x : mouseX , y:mouseY});
     }
     
 }
 
 function mouseReleased(){
-    
+    bird.gamestate = bird.PLAY;
     Matter.Body.setStatic(bird.body , false);
+}
+function keyPressed(){
+    if(keyCode == 32  && bird.gamestate == bird.PLAY){
+        Matter.Body.setPosition(bird.body , {x : 280 , y:130});
+        bird.body.angle = 0;
+        slingshot.attach(bird.body);
+        bird.gamestate = bird.SERVE;
+        Matter.Body.setStatic(bird.body , true);
+        bird.location = [];
+    }
+}
+async function getTime(){
+
+    var response = await fetch("https://worldtimeapi.org/api/timezone/asia/kolkata" );
+    var responseJSON = await response.json();
+    var datetime = responseJSON.datetime;
+    var time = datetime.slice(11 , 13);
+    console.log(time);
+    if(time>=6 && time<=17){
+        backgroundImg = loadImage("sprites/bg.png");
+    }
+    else{
+        backgroundImg = loadImage("sprites/bg2.jpg");
+    }
+    
+        
+    
 }
 
